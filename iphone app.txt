@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compatibility Calculator</title>
+    <link rel="manifest" href="manifest.json" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding-bottom: 40px;
+        }
+        input, select {
+            width: 80px;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #007aff;
+            color: white;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 26px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Compatibility Score</h1>
+
+    <label>Fitness (1-10): <input id="F" type="number" min="1" max="10"></label>
+    <label>Grooming (1-10): <input id="G" type="number" min="1" max="10"></label>
+    <label>Social Skills (1-10): <input id="S" type="number" min="1" max="10"></label>
+    <label>Intelligence (1-10): <input id="I" type="number" min="1" max="10"></label>
+    <label>Kindness (1-10): <input id="K" type="number" min="1" max="10"></label>
+
+    <label>Christian:
+        <select id="C">
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    </label>
+
+    <label>Promiscuity (0-1): <input id="P" type="number" min="0" max="1" step="0.1"></label>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            const F = parseFloat(document.getElementById("F").value) || 0;
+            const G = parseFloat(document.getElementById("G").value) || 0;
+            const S = parseFloat(document.getElementById("S").value) || 0;
+            const I = parseFloat(document.getElementById("I").value) || 0;
+            const K = parseFloat(document.getElementById("K").value) || 0;
+            const C = parseFloat(document.getElementById("C").value) || 0;
+            const P = parseFloat(document.getElementById("P").value) || 0;
+
+            const score = 0.25*F + 0.2*G + 0.15*S + 0.25*I + 0.15*K + 2*C - 2*P;
+
+            document.getElementById("result").innerText = "Score: " + score.toFixed(2);
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
